@@ -29,7 +29,7 @@ const Login = () => {
   const handleLogin = async () => {
     // Send the email and password to the backend
     setIsLoading(true);
-    await axios.post('https://nm-76ba92qkl-chronos91s-projects.vercel.app/api/get_user_info', {
+    await axios.post('https://nm-be.vercel.app/get_user_info', {
       email: email, // 
       password: password,
     });
