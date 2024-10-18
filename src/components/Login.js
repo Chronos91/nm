@@ -33,9 +33,6 @@ const Login = () => {
         email: email,
         password: password,
       },); 
-  
-      console.log('Login successful:', response.data);
-      alert('Login successful');
       window.location.reload();
     } catch (error) {
       if (error.message === 'Network Error') {
