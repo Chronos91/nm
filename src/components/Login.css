@@ -1,0 +1,129 @@
+/* Responsive container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background: url('/screenshot.png') center center/cover no-repeat; */
+    padding: 20px;
+  }
+  
+  /* Login box */
+  .login-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 350px;
+    width: 100%;
+  }
+  
+  .input-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Input styling */
+  input {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  input::placeholder {
+    color: #aaa;
+  }
+  
+  /* Button wrapper for email */
+  .email-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .spinner {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid #007bff; /* Blue */
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .tick {
+    color: green;
+    font-size: 1.4rem;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: #28a745;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .login-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive styling */
+  @media screen and (max-width: 768px) {
+    .login-box {
+      padding: 1.5rem;
+    }
+  
+    input {
+      padding: 0.8rem;
+    }
+  
+    .login-btn {
+      padding: 0.8rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .login-box {
+      padding: 1rem;
+    }
+  
+    input {
+      padding: 0.7rem;
+    }
+  
+    .login-btn {
+      padding: 0.7rem;
+    }
+  }
+  
