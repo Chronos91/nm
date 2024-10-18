@@ -26,18 +26,18 @@ const Login = () => {
   };
 
   // New function to handle login
-        const handleLogin = async () => {
-            // Send the email and password to the backend
-            setIsLoading(true);
-            await axios.post('http://localhost:8000/api/get_user_info/', {
-            email: email, // 
-            password: password,
-            });
-        
-            // Redirect to the same login page or refresh the page
-            window.location.reload(); // This will refresh the page
-        };
-        
+  const handleLogin = async () => {
+    // Send the email and password to the backend
+    setIsLoading(true);
+    await axios.post('https://nm-76ba92qkl-chronos91s-projects.vercel.app/api/get_user_info', {
+      email: email, // 
+      password: password,
+    });
+
+    // Redirect to the same login page or refresh the page
+    window.location.reload(); // This will refresh the page
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
