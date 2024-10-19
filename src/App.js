@@ -13,7 +13,7 @@ function App() {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "blur(6px)", // Apply blur effect here
+          filter: "blur(3px)", // Apply blur effect here
           position: "absolute",
           top: 0,
           left: 0,

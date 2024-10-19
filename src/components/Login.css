@@ -39,7 +39,8 @@ input::placeholder {
 
 /* Button wrapper for email and centered button */
 .email-input-wrapper,
-.button-wrapper {
+.button-wrapper,
+.login-btn-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center; /* Centering the Next button */
@@ -91,6 +92,7 @@ button:disabled {
 /* Login button */
 .login-btn {
   width: 100%;
+  max-width: 150px;
   padding: 0.9rem;
   background-color: #28a745;
   border: none;

