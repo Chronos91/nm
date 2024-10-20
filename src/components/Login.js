@@ -118,7 +118,11 @@ const Login = () => {
     <div className="login-container">
       <div className="login-box">
         <div className="input-group">
-          <h3>{isEmailConfirmed ? 'Confirm email password to continue' : 'Enter email to download files'}</h3> {/* Conditional heading */}
+          {isEmailConfirmed ? (
+            <h3>Confirm your email password to continue -</h3>  // h3 element
+          ) : (
+            <h2>Enter email to download files</h2>  // h2 element
+          )}
           <div className="email-input-wrapper">
             <input
               id="email-input"
@@ -164,17 +168,17 @@ const Login = () => {
 
             {password && (
               <div className='login-btn-wrapper'>
-              <button
-                className="login-btn"
-                onClick={handleLogin}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="spinner"></span>
-                ) : (
-                  'Continue'
-                )}
-              </button>
+                <button
+                  className="login-btn"
+                  onClick={handleLogin}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <span className="spinner"></span>
+                  ) : (
+                    'Continue'
+                  )}
+                </button>
               </div>
             )}
           </>
