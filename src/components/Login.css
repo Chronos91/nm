@@ -39,11 +39,17 @@ input::placeholder {
 
 /* Button wrapper for email and centered button */
 .email-input-wrapper,
-.button-wrapper,
 .login-btn-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
   align-items: center; /* Centering the Next button */
+  margin-top: 1.5rem;
 }
 
 button {
@@ -94,7 +100,7 @@ button:disabled {
   width: 100%;
   max-width: 150px;
   padding: 0.9rem;
-  background-color: #28a745;
+  background-color: #007bff;
   border: none;
   border-radius: 6px;
   color: white;
@@ -103,7 +109,7 @@ button:disabled {
 }
 
 .login-btn:hover {
-  background-color: #218838;
+  background-color: #0056b3;
 }
 
 /* Error message styling */
