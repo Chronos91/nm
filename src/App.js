@@ -41,7 +41,7 @@ function App() {
         alt="Background"
         style={{
           position: "absolute",
-          top: 0,
+          top: "10px",
           left: 0,
           width: "100%",
           height: "100%",

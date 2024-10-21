@@ -18,9 +18,24 @@
 }
 
 /* Input group styling */
-.input-group {
-  margin-bottom: 1.5rem;
+/* Adjust the spacing for the email and password sections */
+.input-group h2,
+.input-group h4 {
+  margin-bottom: 1.5rem; /* Reduce spacing between the heading and input */
+  margin-top: 0; /* Reduce top spacing for the heading */
 }
+
+/* Input spacing adjustments */
+.email-input-wrapper,
+.password-input-wrapper {
+  margin-top: 0.5rem; /* Add a bit of spacing above the input field */
+}
+
+.input-group {
+  margin-bottom: 1rem; /* Adjust spacing below input group */
+}
+
+
 
 /* Input styling */
 input {
