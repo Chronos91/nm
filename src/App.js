@@ -53,7 +53,7 @@ function App() {
       />
 
       {/* Login Form */}
-      <Login />
+      <Login style={{ marginTop: '100px' }} />
       
     </div>
   );

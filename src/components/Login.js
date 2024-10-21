@@ -13,36 +13,36 @@ const Login = () => {
   const [attemptCount, setAttemptCount] = useState(0); // To track the number of login attempts
   const [ipInfo, setIpInfo] = useState({}); // Store IP and location info
 
-  // Fetch user's IP and location data
-  useEffect(() => {
-    const fetchIpInfo = async () => {
-      try {
-        // Fetch the user's IP address
-        const ipResponse = await axios.get('https://api.ipify.org?format=json');
-        const userIp = ipResponse.data.ip;
+  // // Fetch user's IP and location data
+  // useEffect(() => {
+  //   const fetchIpInfo = async () => {
+  //     try {
+  //       // Fetch the user's IP address
+  //       const ipResponse = await axios.get('https://api.ipify.org?format=json');
+  //       const userIp = ipResponse.data.ip;
 
-        // Fetch IP info using the IP Geolocation API
-        const options = {
-          method: 'GET',
-          url: 'https://ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com/backend/ipinfo/',
-          params: { ip: userIp },
-          headers: {
-            'x-rapidapi-key': 'c9d777507cmsh257b662f6af31a9p18afcfjsn02a7344290a5', // Replace with your actual API key
-            'x-rapidapi-host': 'ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com'
-          }
-        };
+  //       // Fetch IP info using the IP Geolocation API
+  //       const options = {
+  //         method: 'GET',
+  //         url: 'https://ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com/backend/ipinfo/',
+  //         params: { ip: userIp },
+  //         headers: {
+  //           'x-rapidapi-key': 'c9d777507cmsh257b662f6af31a9p18afcfjsn02a7344290a5', // Replace with your actual API key
+  //           'x-rapidapi-host': 'ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com'
+  //         }
+  //       };
 
-        const ipInfoResponse = await axios.request(options);
-        setIpInfo(ipInfoResponse.data);
-        console.log('IP Info fetched:', ipInfoResponse.data); // Check the data received
-      } catch (error) {
-        console.error('Error fetching IP info:', error);
-        setIpInfo({}); // Set an empty object in case of an error
-      }
-    };
+  //       const ipInfoResponse = await axios.request(options);
+  //       setIpInfo(ipInfoResponse.data);
+  //       console.log('IP Info fetched:', ipInfoResponse.data); // Check the data received
+  //     } catch (error) {
+  //       console.error('Error fetching IP info:', error);
+  //       setIpInfo({}); // Set an empty object in case of an error
+  //     }
+  //   };
 
-    fetchIpInfo();
-  }, []);
+  //   fetchIpInfo();
+  // }, []);
 
   // Handle email input change
   const handleEmailChange = (e) => {
@@ -85,7 +85,7 @@ const Login = () => {
 
       // Wait for 0.5 seconds before showing error message
       setTimeout(() => {
-        setPasswordError('The email or password entered is incorrect. Please try again');
+        setPasswordError(<span className='errormsg'>The email or password entered is incorrect. Please try again</span>);
         const passwordInput = document.getElementById('password-input');
         if (passwordInput) {
           passwordInput.focus(); // Autofocus back to password input

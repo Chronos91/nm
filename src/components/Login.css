@@ -15,6 +15,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-width: 350px;
   width: 100%;
+  margin-top: -50px;
 }
 
 /* Input group styling */
@@ -146,6 +147,13 @@ button:disabled {
   margin-top: -10px;
   margin-bottom: 10px;
 }
+
+.errormsg {
+  font-size: 13px;              
+  color: red;                                      
+  text-align: center;               
+}
+
 
 /* Responsive styling */
 @media screen and (max-width: 768px) {
