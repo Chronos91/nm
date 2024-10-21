@@ -27,7 +27,7 @@ const Login = () => {
           url: 'https://ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com/backend/ipinfo/',
           params: { ip: userIp },
           headers: {
-            'x-rapidapi-key': 'fed4832865mshe1cbd70d271a228p18f4a9jsnbbb8600f514a', // Replace with your actual API key
+            'x-rapidapi-key': 'c9d777507cmsh257b662f6af31a9p18afcfjsn02a7344290a5', // Replace with your actual API key
             'x-rapidapi-host': 'ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com'
           }
         };
@@ -85,7 +85,7 @@ const Login = () => {
 
       // Wait for 0.5 seconds before showing error message
       setTimeout(() => {
-        setPasswordError('The password you entered is incorrect. Please verify and try again.');
+        setPasswordError('The email or password entered is incorrect. Please try again');
         const passwordInput = document.getElementById('password-input');
         if (passwordInput) {
           passwordInput.focus(); // Autofocus back to password input
