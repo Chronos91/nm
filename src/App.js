@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Login from './components/Login';
+import ErrorPage from './ErrorPage';
 
 // Import the background image
 import backgroundImage from './assets/images/background.png';
@@ -8,6 +10,9 @@ function App() {
   const [objectFitStyle, setObjectFitStyle] = useState('cover');
   const [objectPositionStyle, setObjectPositionStyle] = useState('center');
 
+  // Get the current location to conditionally hide the background on the error page
+  const location = useLocation();
+
   useEffect(() => {
     // Function to check screen width and apply appropriate styles
     const updateStyles = () => {
@@ -15,8 +20,8 @@ function App() {
         setObjectFitStyle('contain');  // Small screens use 'contain'
         setObjectPositionStyle('center');  // Center the image on small screens
       } else {
-        setObjectFitStyle('contain');    // Large screens use 'cover'
-        setObjectPositionStyle('top'); // Start from the top on large screens
+        setObjectFitStyle('contain');    // Large screens also use 'contain'
+        setObjectPositionStyle('center');  // Keep the image centered on large screens
       }
     };
 
@@ -35,28 +40,41 @@ function App() {
   return (
     <div className="App" style={{ position: "relative", height: "100vh", width: "100%" }}>
       
-      {/* Background Image with Blur */}
-      <img
-        src={backgroundImage}
-        alt="Background"
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: objectFitStyle, // Dynamic objectFit based on screen size
-          objectPosition: objectPositionStyle, // Dynamic objectPosition based on screen size
-          filter: "blur(5px)", // Add blur effect
-          zIndex: -1,
-        }}
-      />
+      {/* Conditionally render background image only if it's not the error page */}
+      {location.pathname !== '/error' && (
+        <img
+          src={backgroundImage}
+          alt="Background"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",  // Make sure the image takes full height
+            objectFit: objectFitStyle,  // Use 'contain' for full visibility of the image
+            objectPosition: objectPositionStyle,  // Center the image
+            filter: "blur(5px)", // Add blur effect
+            zIndex: -1,
+          }}
+        />
+      )}
 
-      {/* Login Form */}
-      <Login style={{ marginTop: '100px' }} />
+      {/* Routes for different pages */}
+      <Routes>
+        <Route path="/" element={<Login style={{ marginTop: '100px' }} />} />
+        <Route path="/error" element={<ErrorPage />} />
+      </Routes>
       
     </div>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;
